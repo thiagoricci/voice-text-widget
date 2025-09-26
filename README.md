@@ -1,73 +1,127 @@
-# Welcome to your Lovable project
+# AI Voice Assistant Chat Widget
 
-## Project info
+A modern, responsive chat widget with voice and text capabilities powered by Retell AI. Features an expandable interface with professional design and seamless user experience.
 
-**URL**: https://lovable.dev/projects/2cdc8c77-2fb8-48d4-8c5f-6f3c49c327e7
+## Features
 
-## How can I edit this code?
+- 🎤 **Voice Calls**: Real-time voice conversations with AI assistant
+- 💬 **Text Chat**: Instant messaging with intelligent responses
+- 🎨 **Modern UI**: Clean, expandable interface design
+- 📱 **Responsive**: Works perfectly on all devices
+- ⚡ **Auto-scroll**: Automatic scrolling for long conversations
+- 🔄 **Session Management**: Efficient chat session handling
 
-There are several ways of editing your application.
+## Tech Stack
 
-**Use Lovable**
+- **Frontend**: React + TypeScript + Vite
+- **Styling**: Tailwind CSS + shadcn/ui
+- **AI Integration**: Retell AI SDK
+- **Icons**: Lucide React
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/2cdc8c77-2fb8-48d4-8c5f-6f3c49c327e7) and start prompting.
+## Environment Setup
 
-Changes made via Lovable will be committed automatically to this repo.
+### Prerequisites
 
-**Use your preferred IDE**
+- Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+- Retell AI account - [Sign up here](https://retell.ai)
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### Installation & Setup
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+1. **Clone the repository**
 
-Follow these steps:
+   ```sh
+   git clone <YOUR_GIT_URL>
+   cd <YOUR_PROJECT_NAME>
+   ```
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+2. **Install dependencies**
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+   ```sh
+   npm install
+   ```
 
-# Step 3: Install the necessary dependencies.
-npm i
+3. **Set up environment variables**
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+   Create a `.env` file in the root directory with your Retell AI credentials:
+
+   ```env
+   # Retell AI Configuration
+   VITE_RETELL_API_KEY=your_retell_api_key_here
+   VITE_RETELL_VOICE_AGENT_ID=your_voice_agent_id_here
+   VITE_RETELL_CHAT_AGENT_ID=your_chat_agent_id_here
+   ```
+
+   ### Getting Your Retell AI Credentials
+
+   1. **Sign up/Login** to [Retell AI](https://retell.ai)
+   2. **Get your API Key**:
+      - Go to your dashboard
+      - Navigate to "API Keys" section
+      - Copy your API key (starts with `key_`)
+   3. **Create/Get Agent IDs**:
+      - Go to "Agents" section
+      - Create new agents or use existing ones
+      - Copy the agent IDs (start with `agent_`)
+
+4. **Start the development server**
+
+   ```sh
+   npm run dev
+   ```
+
+5. **Open your browser**
+
+   Navigate to `http://localhost:8080` to see your chat widget in action!
+
+## Usage
+
+1. **Click the floating chat button** in the bottom-right corner
+2. **Choose your preferred method**:
+   - **Voice chat**: Click the green "Voice chat" button
+   - **Text chat**: Click the "Text chat" button
+3. **Start conversing** with the AI assistant!
+
+## Development
+
+### Available Scripts
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build
+- `npm run lint` - Run ESLint
+
+### Project Structure
+
+```
+src/
+├── components/
+│   ├── FloatingChatButton.tsx  # Main chat interface
+│   ├── TextChat.tsx           # Text chat component
+│   ├── VoiceCall.tsx          # Voice call component
+│   └── ui/                    # UI components
+├── pages/
+│   └── Index.tsx              # Main page
+└── App.tsx                    # Root component
 ```
 
-**Edit a file directly in GitHub**
+## Deployment
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### Deploy with Lovable
 
-**Use GitHub Codespaces**
+Simply open [Lovable](https://lovable.dev/projects/2cdc8c77-2fb8-48d4-8c5f-6f3c49c327e7) and click on Share → Publish.
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+### Manual Deployment
 
-## What technologies are used for this project?
+1. Build the project: `npm run build`
+2. Deploy the `dist` folder to your hosting provider
 
-This project is built with:
+## Support
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+For issues related to:
 
-## How can I deploy this project?
+- **Retell AI integration**: Check [Retell AI Documentation](https://docs.retell.ai)
+- **General development**: Check the [Lovable Documentation](https://docs.lovable.dev)
 
-Simply open [Lovable](https://lovable.dev/projects/2cdc8c77-2fb8-48d4-8c5f-6f3c49c327e7) and click on Share -> Publish.
+## License
 
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+This project is built with [Lovable](https://lovable.dev).
