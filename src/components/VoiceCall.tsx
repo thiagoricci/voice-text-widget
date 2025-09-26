@@ -16,8 +16,8 @@ export function VoiceCall({ onBack }: VoiceCallProps) {
   const retellWebClient = useRef<RetellWebClient>();
 
   // Your Retell credentials
-  const RETELL_API_KEY = "key_236cebe464b79fed5c845d447cb3";
-  const AGENT_ID = "agent_eb8b02e8f0280af48e68c8f40a";
+  const RETELL_API_KEY = import.meta.env.VITE_RETELL_API_KEY;
+  const AGENT_ID = import.meta.env.VITE_RETELL_VOICE_AGENT_ID;
 
   useEffect(() => {
     // Initialize Retell Web Client
@@ -145,9 +145,9 @@ export function VoiceCall({ onBack }: VoiceCallProps) {
   };
 
   return (
-    <div className="py-6">
+    <div className="py-2">
       {/* Header */}
-      <div className="flex items-center gap-3 pb-6 border-b">
+      <div className="flex items-center gap-3 pb-2 border-b">
         <Button variant="ghost" size="icon" onClick={onBack}>
           <ArrowLeft className="h-4 w-4" />
         </Button>
@@ -155,43 +155,13 @@ export function VoiceCall({ onBack }: VoiceCallProps) {
       </div>
 
       {/* Call Interface */}
-      <div className="text-center py-8">
-        {/* Avatar/Status */}
-        <div className="relative inline-block mb-6">
-          <div className="w-24 h-24 bg-gradient-primary rounded-full flex items-center justify-center mx-auto mb-4">
-            <Mic className="w-12 h-12 text-white" />
-          </div>
-          {(callState === "connected" && isAgentSpeaking) && (
-            <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center animate-pulse">
-              <div className="w-3 h-3 bg-white rounded-full"></div>
-            </div>
-          )}
-          {(callState === "connected" && !isAgentSpeaking) && (
-            <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-green-500 rounded-full flex items-center justify-center animate-pulse">
-              <div className="w-3 h-3 bg-white rounded-full"></div>
-            </div>
-          )}
-        </div>
-
-        <h3 className="text-xl font-semibold mb-2">AI Assistant</h3>
-        <p className={`text-sm ${getCallStateColor()} mb-8`}>
-          {getCallStateText()}
-        </p>
-
-        {/* Setup Notice */}
-        {callState === "idle" && (
-          <div className="bg-muted/50 rounded-lg p-4 mb-6 text-sm text-muted-foreground">
-            <p className="font-medium mb-1">Ready to Connect</p>
-            <p>Click the call button below to start your voice conversation with the AI assistant.</p>
-          </div>
-        )}
-
-        {/* Call Controls */}
-        <div className="flex justify-center gap-4">
+      <div className="text-center py-4">
+        {/* Call Button at Top */}
+        <div className="mb-4">
           {callState === "idle" && (
             <Button
               onClick={startCall}
-              className="bg-gradient-primary hover:shadow-glow transition-all duration-300 rounded-full w-16 h-16"
+              className="bg-gradient-primary hover:shadow-glow transition-all duration-300 rounded-full w-16 h-16 mx-auto"
               size="icon"
             >
               <Phone className="w-6 h-6" />
@@ -199,11 +169,11 @@ export function VoiceCall({ onBack }: VoiceCallProps) {
           )}
 
           {(callState === "connecting" || callState === "connected") && (
-            <>
+            <div className="flex justify-center gap-4 mb-4">
               <Button
                 onClick={toggleMute}
                 variant={isMuted ? "destructive" : "outline"}
-                className="rounded-full w-14 h-14"
+                className="rounded-full w-12 h-12"
                 size="icon"
               >
                 {isMuted ? <MicOff className="w-5 h-5" /> : <Mic className="w-5 h-5" />}
@@ -212,21 +182,38 @@ export function VoiceCall({ onBack }: VoiceCallProps) {
               <Button
                 onClick={endCall}
                 variant="destructive"
-                className="rounded-full w-16 h-16"
+                className="rounded-full w-12 h-12"
                 size="icon"
               >
-                <PhoneOff className="w-6 h-6" />
+                <PhoneOff className="w-5 h-5" />
               </Button>
-            </>
+            </div>
           )}
         </div>
 
-        {/* Call Instructions */}
-        {callState === "connected" && (
-          <p className="text-sm text-muted-foreground mt-6">
-            Speak naturally - the AI is listening and will respond in real-time.
-          </p>
-        )}
+        {/* Avatar/Status */}
+        <div className="relative inline-block mb-4">
+          <div className="w-20 h-20 bg-gradient-primary rounded-full flex items-center justify-center mx-auto mb-3">
+            <Mic className="w-10 h-10 text-white" />
+          </div>
+          {(callState === "connected" && isAgentSpeaking) && (
+            <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center animate-pulse">
+              <div className="w-2 h-2 bg-white rounded-full"></div>
+            </div>
+          )}
+          {(callState === "connected" && !isAgentSpeaking) && (
+            <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center animate-pulse">
+              <div className="w-2 h-2 bg-white rounded-full"></div>
+            </div>
+          )}
+        </div>
+
+        <h3 className="text-lg font-semibold mb-2">AI Assistant</h3>
+        <p className={`text-sm ${getCallStateColor()} mb-4`}>
+          {getCallStateText()}
+        </p>
+
+
       </div>
     </div>
   );

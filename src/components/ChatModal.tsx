@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { MessageSquare, Mic } from "lucide-react";
 import { TextChat } from "./TextChat";
@@ -8,15 +8,16 @@ import { VoiceCall } from "./VoiceCall";
 interface ChatModalProps {
   isOpen: boolean;
   onClose: () => void;
+  initialMode?: "text" | "voice";
 }
 
 type ChatMode = "selection" | "text" | "voice";
 
-export function ChatModal({ isOpen, onClose }: ChatModalProps) {
-  const [mode, setMode] = useState<ChatMode>("selection");
+export function ChatModal({ isOpen, onClose, initialMode }: ChatModalProps) {
+  const [mode, setMode] = useState<ChatMode>(initialMode === "text" ? "text" : initialMode === "voice" ? "voice" : "selection");
 
   const handleClose = () => {
-    setMode("selection");
+    setMode(initialMode === "text" ? "text" : initialMode === "voice" ? "voice" : "selection");
     onClose();
   };
 
