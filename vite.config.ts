@@ -14,19 +14,22 @@ export default defineConfig(({ mode }) => {
     resolve: {
       alias: {
         "@": path.resolve(__dirname, "./src"),
+        crypto: "crypto-browserify",
+        process: "process/browser",
       },
     },
     optimizeDeps: {
-      include: ["retell-client-js-sdk"],
+      include: ["retell-client-js-sdk", "crypto-browserify", "process"],
     },
     define: {
       global: "globalThis",
+      "process.env": {},
     },
     build: {
       rollupOptions: {
         external: (id) => {
-          // Externalize Node.js modules that are not needed in browser
-          return ["fs", "path", "crypto", "util", "events", "stream", "vm", "buffer", "process"].includes(id);
+          // Externalize modules that are NOT needed by retell-sdk in browser
+          return ["fs", "path", "util", "events", "stream", "vm", "buffer"].includes(id);
         },
       },
     },
