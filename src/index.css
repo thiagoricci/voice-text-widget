@@ -17,10 +17,10 @@ All colors MUST be HSL.
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    /* AI-themed primary colors - blue to purple gradient */
-    --primary: 238 75% 65%;
+    /* AI-themed primary colors - blue gradient */
+    --primary: 210 100% 50%;
     --primary-foreground: 0 0% 100%;
-    --primary-glow: 250 85% 70%;
+    --primary-glow: 220 100% 60%;
 
     --secondary: 210 40% 96.1%;
     --secondary-foreground: 222.2 47.4% 11.2%;
@@ -28,7 +28,7 @@ All colors MUST be HSL.
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
 
-    --accent: 250 85% 70%;
+    --accent: 220 100% 60%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
@@ -36,13 +36,13 @@ All colors MUST be HSL.
 
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 238 75% 65%;
+    --ring: 210 100% 50%;
 
     /* Custom design tokens */
-    --gradient-primary: linear-gradient(135deg, hsl(238 75% 65%), hsl(250 85% 70%));
-    --gradient-hero: linear-gradient(135deg, hsl(238 75% 65% / 0.1), hsl(250 85% 70% / 0.05));
-    --shadow-glow: 0 0 30px hsl(238 75% 65% / 0.3);
-    --shadow-elegant: 0 10px 40px -10px hsl(238 75% 65% / 0.2);
+    --gradient-primary: linear-gradient(135deg, hsl(210 100% 50%), hsl(220 100% 60%));
+    --gradient-hero: linear-gradient(135deg, hsl(210 100% 50% / 0.1), hsl(220 100% 60% / 0.05));
+    --shadow-glow: 0 0 30px hsl(210 100% 50% / 0.3);
+    --shadow-elegant: 0 10px 40px -10px hsl(210 100% 50% / 0.2);
     
     --radius: 0.75rem;
 
