@@ -18,6 +18,14 @@ export default defineConfig(({ mode }) => ({
   optimizeDeps: {
     include: ["retell-client-js-sdk"],
   },
+  build: {
+    rollupOptions: {
+      external: (id) => {
+        // Externalize Node.js built-in modules for production builds
+        return ["crypto", "util", "events", "stream", "path", "fs"].includes(id);
+      },
+    },
+  },
   define: {
     global: "globalThis",
   },
