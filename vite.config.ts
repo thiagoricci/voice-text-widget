@@ -15,4 +15,10 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  optimizeDeps: {
+    include: ["retell-client-js-sdk"],
+  },
+  define: {
+    global: "globalThis",
+  },
 }));
