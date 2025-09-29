@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ArrowLeft, Send, Loader2 } from "lucide-react";
+import { ArrowLeft, Send, Loader2, AlertCircle, RefreshCw } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import Retell from 'retell-sdk';
 
@@ -29,6 +29,7 @@ export function TextChat({ onBack }: TextChatProps) {
    const [isLoading, setIsLoading] = useState(false);
    const [isTyping, setIsTyping] = useState(false);
    const [currentChatId, setCurrentChatId] = useState<string | null>(null);
+   const [chatEnded, setChatEnded] = useState(false);
    const scrollAreaRef = useRef<HTMLDivElement>(null);
    const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -64,6 +65,45 @@ export function TextChat({ onBack }: TextChatProps) {
      }
    };
 
+   // Check chat status
+   const checkChatStatus = async (chatId: string): Promise<boolean> => {
+     if (!retellClient.current) {
+       throw new Error("Retell client not initialized");
+     }
+
+     try {
+       const chatResponse = await retellClient.current.chat.retrieve(chatId);
+       console.log("Chat status response:", chatResponse);
+       
+       // Check if chat has ended
+       const isEnded = chatResponse.chat_status !== 'ongoing';
+       
+       if (isEnded) {
+         setChatEnded(true);
+       }
+       
+       return isEnded;
+     } catch (error) {
+       console.error("Error checking chat status:", error);
+       return false;
+     }
+   };
+
+   // Restart chat function
+   const restartChat = () => {
+     setChatEnded(false);
+     setCurrentChatId(null);
+     setMessages([
+       {
+         id: "1",
+         text: "Hello! I'm your AI assistant. How can I help you today?",
+         isUser: false,
+         timestamp: new Date(),
+       },
+     ]);
+     setInputValue("");
+   };
+
    // Auto-scroll to bottom when messages change
    const scrollToBottom = () => {
      if (messagesEndRef.current) {
@@ -76,7 +116,7 @@ export function TextChat({ onBack }: TextChatProps) {
    }, [messages, isTyping]);
 
   const handleSend = async () => {
-    if (!inputValue.trim() || isLoading || !retellClient.current) return;
+    if (!inputValue.trim() || isLoading || !retellClient.current || chatEnded) return;
 
     const userMessage: Message = {
       id: Date.now().toString(),
@@ -120,6 +160,10 @@ export function TextChat({ onBack }: TextChatProps) {
       };
 
       setMessages(prev => [...prev, aiResponse]);
+      
+      // Check chat status after receiving AI response
+      await checkChatStatus(chatId);
+      
     } catch (error) {
       console.error("Error getting AI response:", error);
 
@@ -148,6 +192,10 @@ export function TextChat({ onBack }: TextChatProps) {
           };
 
           setMessages(prev => [...prev, aiResponse]);
+          
+          // Check chat status after retry
+          await checkChatStatus(newChatId);
+          
         } catch (retryError) {
           console.error("Retry failed:", retryError);
           const errorResponse: Message = {
@@ -182,8 +230,17 @@ export function TextChat({ onBack }: TextChatProps) {
         </Button>
         <h3 className="font-semibold">Text Chat</h3>
         <div className="flex items-center gap-2 ml-auto">
-          <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-          <span className="text-sm text-muted-foreground">Online</span>
+          {chatEnded ? (
+            <>
+              <div className="w-2 h-2 bg-gray-400 rounded-full"></div>
+              <span className="text-sm text-muted-foreground">Chat Ended</span>
+            </>
+          ) : (
+            <>
+              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+              <span className="text-sm text-muted-foreground">Online</span>
+            </>
+          )}
         </div>
       </div>
 
@@ -228,21 +285,42 @@ export function TextChat({ onBack }: TextChatProps) {
         </div>
       </ScrollArea>
 
+      {/* Chat Ended Notice */}
+      {chatEnded && (
+        <div className="flex items-center justify-between p-3 bg-muted/50 rounded-lg mb-2">
+          <div className="flex items-center gap-2">
+            <AlertCircle className="h-4 w-4 text-muted-foreground" />
+            <span className="text-sm text-muted-foreground">
+              This chat session has ended.
+            </span>
+          </div>
+          <Button
+            size="sm"
+            variant="outline"
+            onClick={restartChat}
+            className="flex items-center gap-1"
+          >
+            <RefreshCw className="h-3 w-3" />
+            Restart Chat
+          </Button>
+        </div>
+      )}
+
       {/* Input */}
       <div className="flex gap-2 pt-2 border-t">
         <Input
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
-          placeholder="Type your message..."
-          onKeyPress={(e) => e.key === "Enter" && !isLoading && handleSend()}
+          placeholder={chatEnded ? "Chat has ended" : "Type your message..."}
+          onKeyPress={(e) => e.key === "Enter" && !isLoading && !chatEnded && handleSend()}
           className="flex-1"
-          disabled={isLoading}
+          disabled={isLoading || chatEnded}
         />
         <Button
           onClick={handleSend}
           size="icon"
           className="bg-gradient-primary"
-          disabled={isLoading || !inputValue.trim()}
+          disabled={isLoading || !inputValue.trim() || chatEnded}
         >
           {isLoading ? (
             <Loader2 className="h-4 w-4 animate-spin" />
