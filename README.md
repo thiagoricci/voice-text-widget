@@ -187,7 +187,9 @@ To build the standalone embeddable widget file, follow these steps:
 
 3. **Locate the output files** in the `dist/` directory:
 
-   - `widget.iife.js` - The main widget JavaScript file
+   After running the build command, you'll find these files:
+
+   - `widget.iife.js` - The main widget JavaScript file (IIFE format)
    - `widget.css` - The widget CSS styles
 
 4. **Upload these files** to your server or CDN for distribution.
