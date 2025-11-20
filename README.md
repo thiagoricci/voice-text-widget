@@ -193,9 +193,21 @@ To build the standalone embeddable widget file, follow these steps:
 4. **Upload these files** to your server or CDN for distribution.
 
 5. **Embed in your website** by adding these tags to your HTML:
+
+   **How to Embed**
+
+   Simply add the following script tag to your HTML:
+
    ```html
-   <link rel="stylesheet" href="path/to/widget.css" />
-   <script src="path/to/widget.iife.js"></script>
+   <link rel="stylesheet" href="./dist/widget.css" />
+   <script src="./dist/widget.iife.js"></script>
+   ```
+
+   For production use, replace the paths with your CDN URLs:
+
+   ```html
+   <link rel="stylesheet" href="https://your-cdn.com/widget.css" />
+   <script src="https://your-cdn.com/widget.iife.js"></script>
    ```
 
 ### Widget Build Configuration
