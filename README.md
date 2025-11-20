@@ -122,6 +122,152 @@ For issues related to:
 - **Retell AI integration**: Check [Retell AI Documentation](https://docs.retell.ai)
 - **General development**: Check the [Lovable Documentation](https://docs.lovable.dev)
 
+## Building the Embeddable Widget
+
+To build the standalone embeddable widget file, follow these steps:
+
+1. **Install dependencies** (if you haven't already):
+
+   ```sh
+   npm install
+   ```
+
+2. **Build the widget** using the dedicated build script:
+
+   ```sh
+   npm run build:widget
+   ```
+
+   This command uses the `vite.widget.config.ts` configuration to create a standalone JavaScript file that can be embedded in any website.
+
+3. **Locate the output files**:
+
+   - The main widget file will be created at `dist/widget.js`
+   - A CSS file will be created at `dist/widget.css` (if using CSS styles)
+
+4. **Embed in your website**:
+   To use the widget on another website, simply include these files in your HTML:
+
+   ```html
+   <!DOCTYPE html>
+   <html>
+     <head>
+       <link rel="stylesheet" href="path/to/widget.css" />
+     </head>
+     <body>
+       <!-- Your page content -->
+
+       <script src="path/to/widget.js"></script>
+     </body>
+   </html>
+   ```
+
+### Widget Build Configuration
+
+The embeddable widget is built using a specialized Vite configuration (`vite.widget.config.ts`) that:
+
+- Uses IIFE (Immediately Invoked Function Expression) format for standalone execution
+- Bundles all dependencies into a single file
+- Includes necessary polyfills for browser compatibility
+- Optimizes the bundle for size and performance
+- Creates a self-contained component that can be injected into any webpage
+
+### Development vs Production Builds
+
+- **Development build**: Use `npm run build:dev` for a non-minified version with source maps for debugging
+- **Production build**: Use `npm run build:widget` for the optimized, minified version for production use
+
+## Customization
+
+### Styling and Colors
+
+The widget uses a design system based on HSL color values defined in `src/index.css`. You can customize the appearance by modifying the CSS variables in the `:root` selector:
+
+```css
+:root {
+  --primary: 210 100% 50%; /* Primary color (blue) */
+  --primary-glow: 220 100% 60%; /* Primary glow color */
+  --accent: 220 100% 60%; /* Accent color */
+  --gradient-primary: linear-gradient(
+    135deg,
+    hsl(210 100% 50%),
+    hsl(220 100% 60%)
+  ); /* Main gradient */
+  --shadow-glow: 0 0 30px hsl(210 100% 50% / 0.3); /* Glow shadow */
+}
+```
+
+To customize the widget colors:
+
+1. Modify the HSL values in `src/index.css`
+2. Rebuild the widget using `npm run build:widget`
+3. The new styles will be included in the generated `widget.css` and `widget.iife.js` files
+
+### Testing the Widget
+
+To test the widget during development:
+
+1. **Build the widget**:
+
+   ```sh
+   npm run build:widget
+   ```
+
+2. **Open the test page**:
+   After building, open `widget-test.html` in your browser to see the widget in action. This page demonstrates how to embed the widget and provides a testing environment.
+
+3. **Alternative testing method**:
+   You can also run the development server to test the widget in the main application:
+   ```sh
+   npm run dev
+   ```
+
+### Building the Embeddable Widget
+
+To build the standalone embeddable widget file, follow these steps:
+
+1. **Install dependencies** (if you haven't already):
+
+   ```sh
+   npm install
+   ```
+
+2. **Build the widget** using the dedicated build script:
+
+   ```sh
+   npm run build:widget
+   ```
+
+   This command uses the `vite.widget.config.ts` configuration to create a standalone JavaScript file that can be embedded in any website.
+
+3. **Locate the output files** in the `dist/` directory:
+
+   - `widget.iife.js` - The main widget JavaScript file
+   - `widget.css` - The widget CSS styles
+
+4. **Upload these files** to your server or CDN for distribution.
+
+5. **Embed in your website** by adding these tags to your HTML:
+   ```html
+   <link rel="stylesheet" href="path/to/widget.css" />
+   <script src="path/to/widget.iife.js"></script>
+   ```
+
+### Widget Build Configuration
+
+The embeddable widget is built using a specialized Vite configuration (`vite.widget.config.ts`) that:
+
+- Uses IIFE (Immediately Invoked Function Expression) format for standalone execution
+- Bundles all dependencies into a single file
+- Includes necessary polyfills for browser compatibility
+- Optimizes the bundle for size and performance
+- Creates a self-contained component that can be injected into any webpage
+
+### Development vs Production Builds
+
+- **Development build**: Use `npm run build:dev` for a non-minified version with source maps for debugging
+- **Production build**: Use `npm run build:widget` for the optimized, minified version for production use
+
 ## License
 
 This project is built with [Lovable](https://lovable.dev).
